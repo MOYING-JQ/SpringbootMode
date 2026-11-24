@@ -1,0 +1,24 @@
+#服务器配置
+server:
+    port: 8080
+    servlet:
+        encoding:
+            charset: UTF-8
+            enabled: true
+#Spring配置
+spring:
+    datasource:
+        url: jdbc:mysql://localhost:3306/test_db?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+        username:
+        password:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+    mvc:
+        # 当没有找到处理程序时抛出异常
+        throw-exception-if-no-handler-found: true
+# MyBatis配置
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.moying.test.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

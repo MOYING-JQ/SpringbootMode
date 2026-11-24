@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moying.test.mapper.UserMapper">
+
+    <select id="findByPage" resultType="com.moying.test.entity.User">
+    SELECT
+        u.id,u.username,u.email,u.age,u.create_time,u.update_time
+    FROM user u
+    <where>
+        <if test="dto.id != null">
+            AND u.id = #{dto.id}
+        </if>
+        <if test="dto.username != null and dto.username != ''">
+            AND u.username LIKE CONCAT('%',#{dto.username},'%')
+        </if>
+        <if test="dto.email != null and dto.email != ''">
+            AND u.email = #{dto.email}
+        </if>
+    </where>
+    ORDER BY
+    <choose>
+        <when test='dto.getSortField() == "age"'>
+            u.age
+        </when>
+        <otherwise>
+            u.create_time
+        </otherwise>
+    </choose>
+    <choose>
+        <when test="dto.getSortOrder == 'asc'">ASC</when>
+        <otherwise>DESC</otherwise>
+    </choose>
+
+ </select>
+</mapper>
